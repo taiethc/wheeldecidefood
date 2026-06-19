@@ -67,6 +67,7 @@ export default function Wheel({ restaurants }: { restaurants: Restaurant[] }) {
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState<Restaurant | null>(null);
   const spinCountRef = useRef(0);
+  const pendingWinnerIndexRef = useRef<number | null>(null);
 
   function handleSpin() {
     if (spinning) return;
@@ -74,16 +75,25 @@ export default function Wheel({ restaurants }: { restaurants: Restaurant[] }) {
     setSpinning(true);
 
     const winnerIndex = Math.floor(Math.random() * n);
-    const winnerCenterAngle = winnerIndex * segmentAngle + segmentAngle / 2;
+    pendingWinnerIndexRef.current = winnerIndex;
+    const winnerStartAngle = winnerIndex * segmentAngle;
+    // Land anywhere in the middle 80% of the slice, so it's never dead
+    // center but also never close enough to an edge to look ambiguous.
+    const margin = segmentAngle * 0.1;
+    const landingAngle =
+      winnerStartAngle + margin + Math.random() * (segmentAngle - margin * 2);
 
     spinCountRef.current += 1;
     const fullSpins = 5 * 360 * spinCountRef.current;
-    setRotation(fullSpins - winnerCenterAngle);
+    setRotation(fullSpins - landingAngle);
+  }
 
-    setTimeout(() => {
-      setSpinning(false);
-      setWinner(restaurants[winnerIndex]);
-    }, 4000);
+  function handleTransitionEnd(event: React.TransitionEvent<SVGSVGElement>) {
+    if (event.propertyName !== "transform") return;
+    if (pendingWinnerIndexRef.current === null) return;
+    setSpinning(false);
+    setWinner(restaurants[pendingWinnerIndexRef.current]);
+    pendingWinnerIndexRef.current = null;
   }
 
   return (
@@ -102,6 +112,7 @@ export default function Wheel({ restaurants }: { restaurants: Restaurant[] }) {
         <svg
           width={size}
           height={size}
+          onTransitionEnd={handleTransitionEnd}
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: spinning
