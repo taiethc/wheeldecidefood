@@ -59,7 +59,7 @@ export default function RestaurantPicker({
   return (
     <div className="flex flex-col items-center gap-10">
       <div className="w-full max-w-2xl">
-        <h2 className="mb-3 text-center text-sm font-semibold uppercase tracking-wide text-gray-500">
+        <h2 className="mb-3 text-center text-sm font-semibold uppercase tracking-wide text-white/50">
           Filters
         </h2>
 
@@ -73,8 +73,8 @@ export default function RestaurantPicker({
                 onClick={() => setMaxPriceIndex(index)}
                 className={`rounded-full border px-3 py-1 text-sm ${
                   index <= maxPriceIndex
-                    ? "border-black bg-black text-white"
-                    : "border-gray-300 text-gray-500"
+                    ? "border-[#CC785C] bg-[#CC785C] text-white"
+                    : "border-white/20 text-white/60"
                 }`}
               >
                 {formatPriceLevel(level)}
@@ -95,8 +95,8 @@ export default function RestaurantPicker({
                   onClick={() => toggleCuisine(cuisine)}
                   className={`rounded-full border px-3 py-1 text-sm ${
                     isSelected
-                      ? "border-black bg-black text-white"
-                      : "border-gray-300 text-gray-500"
+                      ? "border-[#CC785C] bg-[#CC785C] text-white"
+                      : "border-white/20 text-white/60"
                   }`}
                 >
                   {cuisine}
@@ -104,7 +104,7 @@ export default function RestaurantPicker({
               );
             })}
           </div>
-          <p className="mt-2 text-center text-xs text-gray-400">
+          <p className="mt-2 text-center text-xs text-white/40">
             {selectedCuisines.length === 0
               ? "No cuisine selected = all cuisines included."
               : `${selectedCuisines.length} cuisine(s) selected.`}
@@ -119,8 +119,8 @@ export default function RestaurantPicker({
               onClick={() => setRequireDineIn((prev) => !prev)}
               className={`rounded-full border px-3 py-1 text-sm ${
                 requireDineIn
-                  ? "border-black bg-black text-white"
-                  : "border-gray-300 text-gray-500"
+                  ? "border-[#CC785C] bg-[#CC785C] text-white"
+                  : "border-white/20 text-white/60"
               }`}
             >
               Dine-in
@@ -130,8 +130,8 @@ export default function RestaurantPicker({
               onClick={() => setRequireTakeout((prev) => !prev)}
               className={`rounded-full border px-3 py-1 text-sm ${
                 requireTakeout
-                  ? "border-black bg-black text-white"
-                  : "border-gray-300 text-gray-500"
+                  ? "border-[#CC785C] bg-[#CC785C] text-white"
+                  : "border-white/20 text-white/60"
               }`}
             >
               Takeout
@@ -141,7 +141,7 @@ export default function RestaurantPicker({
       </div>
 
       {filteredRestaurants.length === 0 ? (
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-white/50">
           No restaurants match your filters. Try widening them.
         </p>
       ) : (
@@ -152,18 +152,18 @@ export default function RestaurantPicker({
         {filteredRestaurants.map((restaurant) => (
           <div
             key={restaurant.id}
-            className="rounded-lg border border-gray-200 p-4 shadow-sm"
+            className="rounded-lg border border-white/10 bg-white/5 p-4"
           >
             <h2 className="text-lg font-medium">
               {restaurant.displayName.text}
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-white/60">
               {formatCuisine(restaurant.types)}
             </p>
             <p className="mt-2 text-sm">
               {formatPriceLevel(restaurant.priceLevel)} · ⭐ {restaurant.rating}
             </p>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-white/40">
               {[
                 restaurant.dineIn && "Dine-in",
                 restaurant.takeout && "Takeout",

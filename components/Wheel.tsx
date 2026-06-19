@@ -96,7 +96,7 @@ export default function Wheel({ restaurants }: { restaurants: Restaurant[] }) {
             height: 0,
             borderLeft: "12px solid transparent",
             borderRight: "12px solid transparent",
-            borderTop: "20px solid #1f2937",
+            borderTop: "20px solid #faf9f5",
           }}
         />
         <svg
@@ -162,7 +162,7 @@ export default function Wheel({ restaurants }: { restaurants: Restaurant[] }) {
       <button
         onClick={handleSpin}
         disabled={spinning}
-        className="rounded-full bg-black px-6 py-2 text-white disabled:opacity-50"
+        className="rounded-full bg-[#CC785C] px-6 py-2 text-white disabled:opacity-50"
       >
         {spinning ? "Spinning..." : "Spin the Wheel"}
       </button>
